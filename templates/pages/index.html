@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+Home
+{% endblock %}
 {%block content%}
 <section class="home-slider owl-carousel">
   <div class="slider-item" style="background-image: url({% static 'images/bg_1.jpg' %});">
@@ -592,22 +595,20 @@
       </div>
     </div>
     <div class="row d-flex">
-      <div class="col-md-4 d-flex ftco-animate">
-        <div class="blog-entry align-self-stretch">
-          <a href="blog-single.html" class="block-20" style="background-image: url('{% static 'images/image_1.jpg' %}');">
-          </a>
-          <div class="text py-4 d-block">
-            <div class="meta">
-              <div><a href="#">Sept 10, 2018</a></div>
-              <div><a href="#">Admin</a></div>
-              <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+      {% for pro in shops|slice:':3' %}
+      <div class="col-md-4 text-center">
+        <div class="menu-wrap">
+            <a href="{% url 'product_single' pro_id=1 %}" class="menu-img img mb-4" style="background-image: url({{ pro.photo.url }});"></a>
+            <div class="text">
+                <h3><a href="{% url 'product_single' pro_id=1 %}"></a>{{ pro.name }}</h3>
+                <p class="text-truncate">{{ pro.description }}</p>
+                <p class="price"><span>{{ pro.price }}</span></p>
+                <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
             </div>
-            <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-          </div>
         </div>
-      </div>
-      <div class="col-md-4 d-flex ftco-animate">
+    </div>
+      {% endfor %}
+      {% comment %} <div class="col-md-4 d-flex ftco-animate">
         <div class="blog-entry align-self-stretch">
           <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_2.jpg' %});">
           </a>
@@ -636,7 +637,7 @@
             <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
     </div>
   </div>
 </section>

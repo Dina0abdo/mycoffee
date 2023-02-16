@@ -1,6 +1,8 @@
  {% extends 'base.html' %} 
 {% load static %}
-
+{% block title %}
+sign_in
+{% endblock %}
 {% block content %}
 
 {% comment %} <section class="home-slider owl-carousel">
@@ -23,7 +25,7 @@
     </div>
   </section>  {% endcomment %}
   <!DOCTYPE html>
-  <html lang="en" >
+  {% comment %} <html lang="en" >
   <head>
     <meta charset="UTF-8">
     <title>CodePen - Finance Mobile Application-UX/UI Design Screen One</title>
@@ -32,13 +34,13 @@
   <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap'><link rel="stylesheet" href="./style.css">
   
   </head>
-  <body>
+  <body> {% endcomment %}
     {% comment %} <div class="slider-item" style="background-image: url({% static 'images/bg_3.jpg' %});" data-stellar-background-ratio="0.5"> {% endcomment %}
-      <div class="overlay"></div>
+      {% comment %} <div class="overlay"></div>
     <div class="container">
-      <div class="row slider-text justify-content-center align-items-center">
+      <div class="row slider-text justify-content-center align-items-center"> {% endcomment %}
   <!-- partial:index.partial.html -->
-  <div class="screen-1">
+  {% comment %} <div class="screen-1">
     <svg class="logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="300" height="300" viewbox="0 0 640 480" xml:space="preserve">
       <g transform="matrix(3.31 0 0 3.31 320.4 240.4)">
         <circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(61,71,133); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="40"></circle>
@@ -77,9 +79,57 @@
     <button class="login">Login </button>
     
     <div class="footer"><span>Signup</span><span>Forgot Password?</span></div>
-  </div>
+  </div> {% endcomment %}
   <!-- partial -->
     
-  </body>
-  </html>
+  {% comment %} </body>
+  </html> {% endcomment %}
+  
+  <div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Sign In</h2>
+    {% include 'partials/_alert.html' %}
+
+    {% if request.user.is_authenticated %}
+        <h4 class="alert alert-dark"> Welcome {{request.user.username}} you now logged in </h4>
+        <a  href="{% url 'logout' %}"  class="btn btn-warning">Log out</a>
+
+    {% else %}
+    
+
+    <form method='POST' >
+
+      {% csrf_token %} 
+       
+        
+
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input type="text" name="username" class="form-control" id="inputUsername" placeholder="" required>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" class="form-control" id="inputPassword" required>
+        </div>
+
+        <div class="form-group">
+            <div class="pretty p-svg p-curve p-jelly">
+                <input type="checkbox" checked name="rememberme" id="inputTerms" />
+                <div class="state p-warning">
+                    <!-- svg path -->
+                    {% comment %} <svg class="svg svg-icon" viewBox="0 0 20 20">
+                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                    </svg> {% endcomment %}
+                    <label>Remember Me</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" name="btnlogin" class="btn btn-warning">Login</button>
+        <button type="submit" class="btn btn-warning">other</button>
+
+    </form>
+    {% endif %} 
+
+
+</div>
+
 {% endblock content %} 

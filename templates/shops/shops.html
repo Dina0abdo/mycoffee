@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+Shops
+{% endblock %}
 {% block content %}
 <section class="home-slider owl-carousel">
 
@@ -9,7 +12,7 @@
         <div class="row slider-text justify-content-center align-items-center">
 
           <div class="col-md-7 col-sm-12 text-center ftco-animate">
-              <h1 class="mb-3 mt-5 bread">Order Online</h1>
+              <h1 class="mb-3 mt-5 bread">Order Online </h1>
               <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Shop</span></p>
           </div>
 
@@ -19,7 +22,15 @@
   </section>
 
 
-  <section class="ftco-menu mb-5 pb-5">
+  <section class="ftco-menu mb-5 pb-5" >
+     {% comment %} <hr>
+                                {% for pro in shops %}
+                                <h1>{{pro.name}}</h1><hr>
+                                <img src="{{ pro.photo.url }}" alt="" ><hr> {% endcomment %}
+                                {% comment %} <h1>{{ pro.photo }}</h1>  {% endcomment %}
+
+                                {% comment %} {% endfor %}
+                                <hr> {% endcomment %}
       <div class="container">
           <div class="row d-md-flex">
               <div class="col-lg-12 ftco-animate p-md-5">
@@ -41,263 +52,88 @@
 
                     <div class="tab-pane fade show active" id="v-pills-0" role="tabpanel" aria-labelledby="v-pills-0-tab">
                         <div class="row">
-                            <div class="col-md-3">
+                          {% comment %} <hr>
+                          {{name}}
+                          <hr> {% endcomment %}
+                            {% for pro in shops %}
+                             <div class="col-md-3">
                                       <div class="menu-entry">
-                                              <a href="#" class="img" style="background-image: url({% static 'images/menu-1.jpg' %});"></a>
+                                              <a href="{% url 'product_single' pro_id=pro.id %}" class="img" style="background-image: url({{ pro.photo.url }});"></a>
                                               <div class="text text-center pt-4">
-                                                  <h3><a href="product-single.html">Coffee Capuccino</a></h3>
-                                                  <p>A small river named Duden flows by their place and supplies</p>
-                                                  <p class="price"><span>$5.90</span></p>
-                                                  <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
+                                                  <h3><a href="{% url 'product_single' pro_id=pro.id %}">{{ pro.name }}</a></h3>
+                                                  <p class="text-truncate">{{ pro.description }}</p>
+                                                  <p class="price"><span>{{ pro.price }}</span></p>
+                                                  <p><a href="{% url 'product_single' pro_id=pro.id %}" class="btn btn-primary btn-outline-primary">show details</a></p>
                                               </div>
                                           </div>
                                   </div>
-                                  <div class="col-md-3">
-                                      <div class="menu-entry">
-                                              <a href="#" class="img" style="background-image: url({% static 'images/menu-2.jpg' %});"></a>
-                                              <div class="text text-center pt-4">
-                                                  <h3><a href="product-single.html">Coffee Capuccino</a></h3>
-                                                  <p>A small river named Duden flows by their place and supplies</p>
-                                                  <p class="price"><span>$5.90</span></p>
-                                                  <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-                                              </div>
-                                          </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <div class="menu-entry">
-                                              <a href="#" class="img" style="background-image: url({% static 'images/menu-3.jpg' %});"></a>
-                                              <div class="text text-center pt-4">
-                                                  <h3><a href="product-single.html">Coffee Capuccino</a></h3>
-                                                  <p>A small river named Duden flows by their place and supplies</p>
-                                                  <p class="price"><span>$5.90</span></p>
-                                                  <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-                                              </div>
-                                          </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <div class="menu-entry">
-                                              <a href="#" class="img" style="background-image: url({% static 'images/menu-4.jpg' %});"></a>
-                                              <div class="text text-center pt-4">
-                                                  <h3><a href="product-single.html">Coffee Capuccino</a></h3>
-                                                  <p>A small river named Duden flows by their place and supplies</p>
-                                                  <p class="price"><span>$5.90</span></p>
-                                                  <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-                                              </div>
-                                          </div>
-                                  </div>
+                                  {% empty %}
+                                  <h4 class="alert alert-warning" > No product here</h4>
+                                  <a href={% url 'shops' %} class="alert alert-danger"  >All product</a>
+                                  {% endfor %}
+                                  
+                                  
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
                       <div class="row">
+                        {% for pro in shops %}
+
                             <div class="col-md-4 text-center">
                                 <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-1.jpg' %});"></a>
+                                    <a href="{% url 'product_single' pro_id=pro.id %}" class="menu-img img mb-4" style="background-image: url({{ pro.photo.url }});"></a>
                                     <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                                        <h3><a href="{% url 'product_single' pro_id=pro.id %}"></a>{{ pro.name }}</h3>
+                                        <p class="text-truncate">{{ pro.description }}</p>
+                                        <p class="price"><span>{{ pro.price }}</span></p>
+                                        <p><a href="{% url 'product_single' pro_id=pro.id %}" class="btn btn-primary btn-outline-primary">show Details</a></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-2.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-3.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-4.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-5.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dish-6.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Grilled Beef</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+                            
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
                       <div class="row">
+                        {% for pro in shops %}
+
+
                             <div class="col-md-4 text-center">
                                 <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-1.jpg' %});"></a>
+                                    <a href="{% url 'product_single' pro_id=pro.id %}" class="menu-img img mb-4" style="background-image: url({{ pro.photo.url }});"></a>
                                     <div class="text">
-                                        <h3><a href="product-single.html">Lemonade Juice</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                                        <h3><a href="{% url 'product_single' pro_id=pro.id %}">{{ pro.name }}</a></h3>
+                                        <p class="text-truncate">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                                        <p class="price"><span>{{ pro.price }}</span></p>
+                                        <p><a href=""{% url 'product_single' pro_id=pro.id %}"" class="btn btn-primary btn-outline-primary">show details</a></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-2.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Pineapple Juice</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-3.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Soda Drinks</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-4.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Lemonade Juice</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-5.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Pineapple Juice</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/drink-6.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Soda Drinks</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+                            
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
                       <div class="row">
+                        {% for pro in shops %}
+
                             <div class="col-md-4 text-center">
                                 <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-1.jpg' %});"></a>
+                                    <a href="{% url 'product_single' pro_id=pro.id%}" class="menu-img img mb-4" style="background-image: url({{ pro.photo.url }});"></a>
                                     <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                                        <h3><a href="{% url 'product_single' pro_id=pro.id %}">{{ pro.name }}</a></h3>
+                                        <p>{{ pro.description }}</p>
+                                        <p class="price"><span>{{ pro.price }}</span></p>
+                                        <p><a href="{% url 'product_single' pro_id=pro.id %}" class="btn btn-primary btn-outline-primary">show details</a></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-2.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-3.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-4.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-5.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="menu-wrap">
-                                    <a href="#" class="menu-img img mb-4" style="background-image: url({% static 'images/dessert-6.jpg' %});"></a>
-                                    <div class="text">
-                                        <h3><a href="product-single.html">Hot Cake Honey</a></h3>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                        <p class="price"><span>$2.90</span></p>
-                                        <p><a href="cart.html" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+                            
                         </div>
                     </div>
                   </div>

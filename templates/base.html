@@ -28,7 +28,7 @@
         <link rel="stylesheet" type="text/css" href="{% static ' slide navbar style.css'%}">
         <link rel="stylesheet" href="{% static ' https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap'%}" >
 
-<title>My Caffee</title>
+<title>My Caffee|{% block title %}{% endblock %}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 
@@ -58,5 +58,14 @@
         <script src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false'%}"></script>
         <script src="{% static 'js/google-map.js'%}"></script>
         <script src="{% static 'js/main.js'%}"></script>
+        <script>
+                $(document).ready(function(){
+                        $("#staticBackdrop").on('shown.bs.modal',function(){
+                                $(this).find('#inputQty').focus();
+                                $(this).find('#inputQty').select();
+                        });
+
+                }); 
+        </script>
 </body>
 </html>

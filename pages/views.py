@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from shops.models import Shop
 # Create your views here.
 
 
 def index(request):
-    return render(request, 'pages/index.html')
+    context = {
+        'shops': Shop.objects.all()
+    }
+    return render(request, 'pages/index.html', context)
 
 
 def about(request):

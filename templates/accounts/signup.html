@@ -1,4 +1,179 @@
 {% extends 'base.html' %}
 {% load static %} 
+{% block title %}
+Sign_up
+{% endblock %}
 {%block content%}
+
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Sign Up</h2>
+        <hr>
+        {% include 'partials/_alert.html' %}
+        {% if is_added == True %}
+        <form method='POST' style="display: none;" >
+        {% else %}
+        <form method='POST' >
+        {% endif %}
+            {% csrf_token %} 
+       
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputFirstName">First Name</label>
+                <input type="text" name="fname" class="form-control" id="inputFirstName" required value={{fname}}>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastName">Last Name</label>
+                <input type="text" name="lname" class="form-control" id="inputLastName" required value={{lname}}>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St" required value={{address}}>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Address 2</label>
+            <input type="text" name="address2" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" required value={{address2}}>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" name="city" class="form-control" id="inputCity" required value={{city}}>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputZip">State</label>
+                <input type="text" name="state" class="form-control" id="inputZip" required value={{state}}>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" name="zip" class="form-control" id="inputZip" placeholder="11111" required value={{zip}}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="name@example.com" required value={{email}}>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputUsername">Username</label>
+                <input type="text" name="username" class="form-control" id="inputUsername" placeholder="" required value={{username}}>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" required value={{password}} >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="pretty p-svg p-curve p-jelly">
+                <input type="checkbox" name="terms" id="inputTerms" />
+                <div class="state p-warning">
+                    <!-- svg path -->
+                    {% comment %} <svg class="svg svg-icon" viewBox="0 0 20 20">
+                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                    </svg> {% endcomment %}
+                    <label>I agree to the terms of use and privacy policy</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" name="btnsignup" class="btn btn-warning">Sign Up</button>
+
+    </form>
+
+</div>
+
 {% endblock content %}
+{% comment %} def signup(request):
+
+    if request.method == 'POST' and 'btnsignup' in request.POST:
+
+        # variables for fields
+        fname = None
+        lname = None
+        address = None
+        address2 = None
+        city = None
+        state = None
+        zip_number = None
+        email = None
+        username = None
+        password = None
+        terms = None
+
+        # get values from the form
+        # fname=request.POST['fnameS']
+        if 'fname' in request.POST:
+            fname = request.POST['fname']
+        else:
+            messages.error(request, 'Error in First Name')
+        if 'lname' in request.POST:
+            lname = request.POST['lname']
+        else:
+            messages.error(request, 'Error in Last Name')
+        if 'address' in request.POST:
+            address = request.POST['address']
+        else:
+            messages.error(request, 'Error in Address')
+        if 'address2' in request.POST:
+            address2 = request.POST['address2']
+        else:
+            messages.error(request, 'Error in Address2')
+        if 'city' in request.POST:
+            city = request.POST['city']
+        else:
+            messages.error(request, 'Error in City')
+        if 'state' in request.POST:
+            state = request.POST['state']
+        else:
+            messages.error(request, 'Error in State')
+        if 'zip' in request.POST:
+            zip_number = request.POST['zip']
+        else:
+            messages.error(request, 'Error in Zip')
+        if 'email' in request.POST:
+            email = request.POST['email']
+        else:
+            messages.error(request, 'Error in Email')
+        if 'username' in request.POST:
+            username = request.POST['username']
+        else:
+            messages.error(request, 'Error in Username')
+        if 'password' in request.POST:
+            password = request.POST['password']
+        else:
+            messages.error(request, 'Error in Password')
+        if 'terms' in request.POST:
+            terms = request.POST['terms']
+        # check var
+        if fname and lname and address and address2 and city and state and zip_number and email and username and password:
+            if terms == 'on':
+                # check if User is taken
+                if User.objects.filter(username=username).exists():
+                    messages.error(request, 'Username is taken')
+                else:
+                    # check is email is taken
+                    if User.objects.filter(email=email).exists():
+                        messages.error(request, 'Email is taken')
+                    else:
+                        patt = "^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                        if re.match(patt, email):
+                            # add user
+                            user = User.objects.create_user(
+                                first_name=fname, last_name=lname, email=email, username=username, password=password)
+                            user.save()
+                            # add user profile
+                            userprofile = UserProfile(
+                                user=user, address=address, address2=address2, city=city, state=state, zip_number=zip_number)
+                            userprofile.save()
+                            # Success Message
+                            messages.success(request, 'You account is created')
+                        else:
+                            messages.error(request, 'Email is invalid')
+            else:
+                messages.error(request, 'Check empty fields')
+        else:
+            messages.error(request, 'You most agree to the terms')
+        return redirect('signup')
+    else:
+        return render(request, 'accounts/signup.html')
+ {% endcomment %}

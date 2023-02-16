@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+product_single
+{% endblock %}
 {% block content %}
 <section class="home-slider owl-carousel">
 
@@ -7,9 +10,10 @@
         <div class="overlay"></div>
       <div class="container">
         <div class="row slider-text justify-content-center align-items-center">
-
+{% include 'partials/_alert.html' %} 
           <div class="col-md-7 col-sm-12 text-center ftco-animate">
               <h1 class="mb-3 mt-5 bread">Product Detail</h1>
+
               <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Product Detail</span></p>
           </div>
 
@@ -18,17 +22,16 @@
     </div>
   </section>
 
-  <section class="ftco-section">
+  {% comment %} <section class="ftco-section">
       <div class="container">
           <div class="row">
               <div class="col-lg-6 mb-5 ftco-animate">
-                  <a href="images/menu-2.jpg" class="image-popup"><img src="{% static 'images/menu-2.jpg' %}" class="img-fluid" alt="Colorlib Template"></a>
+                  <a href="images/menu-2.jpg" class="image-popup"><img src="{{pro.photo.url}}" class="img-fluid" alt="Colorlib Template"></a>
               </div>
               <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                  <h3>Creamy Latte Coffee</h3>
-                  <p class="price"><span>$4.90</span></p>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                  <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.
+                  <h3>{{pro.name}}</h3>
+                  <p class="price"><span>${{pro.price}}</span></p>
+                  <p>{{pro.description}}
                       </p>
                       <div class="row mt-4">
                           <div class="col-md-6">
@@ -59,11 +62,119 @@
                    </span>
                 </div>
             </div>
-            <p><a href="cart.html" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-warning"data-toggle="modal" data-target="#exampleModal">Add To Cart</button>
+
+  
+  <!-- Modal -->
+  <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>       
+            <a href="{% url 'shop_fav' pro_id=pro.id %}" class="btn btn-warning text-white">
+                <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+            </a>
               </div>
           </div>
       </div>
-  </section>
+
+  </section> {% endcomment %}
+  <form id="frmaddtocart" action="{% url 'add_to_cart' %}">
+    <h2 class="text-center">Product Details</h2>
+    <hr>
+    {%include 'partials/_alert.html' %} 
+    <section>
+
+        <div class="row p-5 ">
+
+            <div class="card mb-3 w-100">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ pro.photo.url }}" class="card-img" alt="{{ pro.name }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="text-dark " id="productName">{{ pro.name }}</h5>
+                            <hr>
+                            <p class="card-text" id="description">{{ pro.description }}</p>
+                            <hr>
+                            <p class="card-text">Current Price: <span id="price"
+                                    class="bg-dark text-light rounded-circle p-2">${{ pro.price }}</span></p>
+                            <hr>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#staticBackdrop" >Add To Cart</button>
+                             <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered"" role="document" >
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="text-dark" id="staticBackdropLabel">Select Quantity</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="inputQty">Quantity: </label>
+                                        <input type="text" class="text-dark"  name="qty" 
+                                        id="inputQty" value="1" placeholder="" required>
+                                        <input type="hidden" name="pro_id" value="{{pro.id}}">
+                                        <input type="hidden" name="price" value="{{pro.price}}">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnclose">Close</button>
+                                    <button class="btn btn-warning" onclick="addtocart()">Confirm</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'shop_fav' pro_id=pro.id %}"
+                            class="btn btn-warning text-white">
+                                <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                </svg>
+                            </a>
+                            <hr>
+                            <a href="{% url 'shops' %}" class="btn btn-warning">All Products</a>
+                            <a href="{% url 'index' %}" class="btn btn-warning text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                                  </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</form>
+<script>
+  function addtocart(){
+    document.getElementById('btnclose').click();
+    
+    document.getElementById('frmaddtocart').submit();
+
+
+  }
+</script>
 
   <section class="ftco-section">
       <div class="container">

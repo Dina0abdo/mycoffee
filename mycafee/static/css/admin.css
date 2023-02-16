@@ -1,0 +1,29 @@
+#header{
+    background: black;
+    color:azure;
+
+}
+#head{
+    color:aliceblue !important;
+}
+.module caption, .inline-group h2{
+    background: black;
+    color:azure;
+
+
+}
+div.breadcrumbs {
+    background:gold;
+    color:azure;
+   
+}
+#changelist-filter h2 {
+
+    background: black;
+    color:azure;
+}
+
+.submit-row input.default {
+    background: mediumspringgreen;
+    color: beige;
+}
